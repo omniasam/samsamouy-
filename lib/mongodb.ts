@@ -1,6 +1,8 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
+console.log("✅ Loaded MONGODB_URI:", process.env.MONGODB_URI);
+
 if (!uri) throw new Error('Please add your Mongo URI to .env.local');
 
 const options = {
