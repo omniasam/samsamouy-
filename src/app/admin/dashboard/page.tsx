@@ -6,6 +6,10 @@ import { useEffect, useState } from 'react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+export type Tier = {
+  label: string;
+  value: number;
+};
 
 
 export type LocalizedString = {
@@ -20,7 +24,7 @@ export type Plan = {
   features: { en: string; ar: string }[];
   included: boolean[];
   isPopular: boolean;
- tiers: any[];
+tiers: Tier[];
 };
 
 export interface LandingContent {
