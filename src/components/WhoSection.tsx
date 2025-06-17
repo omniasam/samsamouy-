@@ -6,7 +6,12 @@ import { MdDesignServices, MdSupportAgent, MdAccessTimeFilled } from "react-icon
 import { useLang } from "@/context/LangContext";
 import { translations } from "@/locales";
 
-const icons = [<MdDesignServices />, <MdSupportAgent />, <MdAccessTimeFilled />];
+const icons = [
+  <MdDesignServices key="design" />,
+  <MdSupportAgent key="support" />,
+  <MdAccessTimeFilled key="time" />,
+];
+
 
 export default function WhoSection() {
   const [isVisible, setIsVisible] = useState(false);
