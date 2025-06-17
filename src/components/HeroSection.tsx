@@ -1,4 +1,4 @@
-
+'use client'
 import { useEffect, useState } from "react";
 import ImageSlider from "./UI/ImageSlider";
 import Button from "./UI/Button";
