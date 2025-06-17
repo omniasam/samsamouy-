@@ -2,26 +2,50 @@
 import TabbedSection from '@/components/admin/TabbedSection';
 import { CustomInput } from '@/components/admin/UI/CustomInput';
 import { CustomTextarea } from '@/components/admin/UI/CustomTextarea';
-import { LandingContent } from '@/types/translations';
 import { useEffect, useState } from 'react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+export type LocalizedString = {
+  en: string;
+  ar: string;
+};
+export type Plan = {
+  title: LocalizedString;
+  price: number;
+  description: LocalizedString;
+  features: { en: string; ar: string }[];
+  included: boolean[];
+  isPopular: boolean;
+  tiers: any[]; // You can later replace 'any' with your actual tier type
+};
+export type LandingContent = {
+  heroTitle: LocalizedString;
+  heroSubtitle: LocalizedString;
+  services: string[];
+  plans: Plan[];
+};
+
+
 const defaultForm: LandingContent = {
   heroTitle: { en: '', ar: '' },
   heroSubtitle: { en: '', ar: '' },
   services: [''],
-  plans: [{
-    title: '',
-    price: 0,
-    description: '',
-    features: [],
-    included: [],
-    isPopular: false,
-    tiers: []
-  }],
+  plans: [
+    {
+      title: { en: '', ar: '' },
+      price: 0,
+      description: { en: '', ar: '' },
+      features: [],
+      included: [],
+      isPopular: false,
+      tiers: [],
+    },
+  ],
 };
+
+
 
 export default function Dashboard() {
   const [form, setForm] = useState<LandingContent>(defaultForm);

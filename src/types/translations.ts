@@ -93,7 +93,7 @@ export interface LandingContent {
   _id: string;
   heroTitle: TranslatedField;
   heroSubtitle: TranslatedField;
-  services: string[]; // Optional: can also be TranslatedField[]
+  services: string[];
   plans: {
     title: string;
     price: number;
