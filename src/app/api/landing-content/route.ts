@@ -10,12 +10,9 @@ export async function GET() {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
 
-const content = await db
-  .collection<LandingContent & { _id: string }>(COLLECTION)
-  .findOne({ _id: 'homepage' });
-
-
-
+    const content = await db
+      .collection<LandingContent & { _id: string }>(COLLECTION)
+      .findOne({ _id: 'homepage' });
 
     if (!content) {
       return NextResponse.json(
@@ -36,7 +33,6 @@ const content = await db
   }
 }
 
-
 export async function PUT(req: NextRequest) {
   try {
     const body: LandingContent = await req.json();
@@ -44,7 +40,7 @@ export async function PUT(req: NextRequest) {
     const client = await clientPromise;
     const db = client.db(DB_NAME);
 
-    await db.collection(COLLECTION).updateOne(
+    await db.collection<LandingContent & { _id: string }>(COLLECTION).updateOne(
       { _id: 'homepage' },
       { $set: body },
       { upsert: true }
