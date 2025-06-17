@@ -4,25 +4,9 @@ import { useEffect, useState } from "react";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import Title from "./UI/Title";
 import { useLang } from "@/context/LangContext";
-import { LandingContent } from "@/types/translations";
+import { LandingContent, Plan } from "@/types/translations";
 
-/* ---- Types ------------------------------------------------------------ */
-interface Plan {
-  title: Translated | string;
-  description: Translated | string;
-  price?: number | string;
-  features: (Translated | string)[];
-  included: boolean[];
-  isPopular?: boolean;
-  button?: Translated;
-  tiers?: {
-    label: Translated;
-    upgrade?: Translated;
-    price: string;
-    button: Translated;
-  }[];
-}
-type Translated = { en: string; ar: string };
+
 
 /* ---- Component -------------------------------------------------------- */
 export default function PlansSection() {

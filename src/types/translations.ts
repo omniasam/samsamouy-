@@ -77,16 +77,32 @@ export interface TranslationsStructure {
   copyright: string;
   };
 }
-export interface Plan {
-  title: string;
-  price: number;
-  description: string;
-}
-
 
 export interface TranslatedField {
   en: string;
   ar: string;
+}
+
+export interface Tier {
+  label: TranslatedField;
+  price: string;
+  button: TranslatedField;
+  upgrade?: TranslatedField;
+}
+
+export type LocalizedString = {
+  en: string;
+  ar: string;
+};
+export interface Plan {
+  title: TranslatedField;
+  price: number;
+  description: TranslatedField;
+  features: TranslatedField[];
+  included: boolean[];
+  isPopular: boolean;
+  tiers?: Tier[];
+  button?: TranslatedField;
 }
 
 export interface LandingContent {
@@ -94,9 +110,5 @@ export interface LandingContent {
   heroTitle: TranslatedField;
   heroSubtitle: TranslatedField;
   services: string[];
-  plans: {
-    title: string;
-    price: number;
-    description: string;
-  }[];
+  plans: Plan[];
 }
