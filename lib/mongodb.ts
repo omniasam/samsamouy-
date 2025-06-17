@@ -2,7 +2,6 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const uri = process.env.MONGODB_URI!;
 if (!uri) throw new Error('Please add your Mongo URI to .env.local');
-console.log('[DEBUG] MongoDB URI:', uri);
 
 const options = {
   serverApi: {
@@ -12,18 +11,27 @@ const options = {
   },
 };
 
-let client;
+// Ensure we use a cached connection in development (Next.js hot reload)
+let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+// ✅ Declare global only in development context
 declare global {
-  // allow global var reuse in dev
+  // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!global._mongoClientPromise) {
+// ✅ Use global client cache in dev
+if (process.env.NODE_ENV === 'development') {
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
+  }
+  clientPromise = global._mongoClientPromise;
+} else {
+  // ✅ In production, always create a new client
   client = new MongoClient(uri, options);
-  global._mongoClientPromise = client.connect();
+  clientPromise = client.connect();
 }
 
-clientPromise = global._mongoClientPromise!;
 export default clientPromise;
