@@ -2,7 +2,7 @@
 import TabbedSection from '@/components/admin/TabbedSection';
 import { CustomInput } from '@/components/admin/UI/CustomInput';
 import { CustomTextarea } from '@/components/admin/UI/CustomTextarea';
-import { LandingContent, TranslatedField } from '@/types/translations';
+import { LandingContent } from '@/types/translations';
 import { useEffect, useState } from 'react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { ToastContainer, toast } from 'react-toastify';
@@ -32,18 +32,20 @@ export default function Dashboard() {
       .then((data: LandingContent) => setForm(data));
   }, []);
 
-  const update = async () => {
-    try {
-      await fetch('/api/landing-content', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      toast.success('✅ All saved correctly');
-    } catch (error) {
-      toast.error('❌ Something went wrong');
-    }
-  };
+const update = async () => {
+  try {
+    await fetch('/api/landing-content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    toast.success('✅ All saved correctly');
+  } catch (error) {
+    console.error(error); // 👈 helps during debugging
+    toast.error('❌ Something went wrong');
+  }
+};
+
 
   const tabs = [
     {
