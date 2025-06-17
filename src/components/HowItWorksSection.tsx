@@ -7,15 +7,15 @@ import { useLang } from "@/context/LangContext";
 import { translations } from "@/locales";
 
 const icons = [
-  <FaRegClipboard className="text-white text-xl" />,
-  <FaFileSignature className="text-white text-xl" />,
-  <FaRunning className="text-white text-xl" />,
+  { key: 'clipboard', icon: <FaRegClipboard className="text-white text-xl" /> },
+  { key: 'signature', icon: <FaFileSignature className="text-white text-xl" /> },
+  { key: 'running', icon: <FaRunning className="text-white text-xl" /> },
 ];
 
 export default function HowItWorksStepper() {
   const [isVisible, setIsVisible] = useState(false);
   const { lang, dir } = useLang();
-  const { label, title, steps } = translations[lang].howItWorks;
+const { title, steps } = translations[lang].howItWorks;
 
   useEffect(() => {
     const section = document.getElementById("how-it-works");
@@ -54,10 +54,10 @@ export default function HowItWorksStepper() {
               style={{ transitionDelay: `${idx * 100}ms` }}
             >
               {/* Icon */}
-              <div className="flex flex-col items-center">
-                <div className="relative z-10 bg-mainColor w-12 h-12 rounded-full flex items-center justify-center top-0">
-                  {icons[idx]}
-                </div>
+               <div className="flex flex-col items-center">
+      <div className="relative z-10 bg-mainColor w-12 h-12 rounded-full flex items-center justify-center top-0">
+        {icons[idx].icon}
+      </div>
                 {idx !== steps.length - 1 && (
                   <div className="block md:hidden absolute bottom-[-52px] w-[1.5px] h-[45px] bg-gray-300" />
                 )}
