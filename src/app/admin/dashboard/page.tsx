@@ -6,11 +6,18 @@ import { useEffect, useState } from 'react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+export type Tier = {
+  label: string;
+  price: number;
+  button: string;
+  upgrade?: string;
+};
 
 export type LocalizedString = {
   en: string;
   ar: string;
 };
+
 export type Plan = {
   title: LocalizedString;
   price: number;
@@ -18,8 +25,9 @@ export type Plan = {
   features: { en: string; ar: string }[];
   included: boolean[];
   isPopular: boolean;
-  tiers: any[]; // You can later replace 'any' with your actual tier type
+  tiers: Tier[];
 };
+
 export type LandingContent = {
   heroTitle: LocalizedString;
   heroSubtitle: LocalizedString;
@@ -44,6 +52,7 @@ const defaultForm: LandingContent = {
     },
   ],
 };
+
 
 
 
