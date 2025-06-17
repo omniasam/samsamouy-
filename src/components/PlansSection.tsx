@@ -39,7 +39,7 @@ export default function PlansSection() {
           mobile: "01111794465",   // "
           customerReference: `plan-${Date.now()}`,
           paymentOptions: [2, 4, 6, 31, 32], // card / wallet / Meeza / ApplePay / TRU
-            redirectUrl: "http://localhost:3000/thank-you",
+            redirectUrl: "https://samsamouy-hlt8.vercel.app/thank-you",
 
         }),
       });
