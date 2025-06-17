@@ -1,7 +1,8 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
-import { config } from 'dotenv';
-config();
+// ✅ Load .env.local early
+import * as dotenv from 'dotenv';
+dotenv.config(); // Load env vars BEFORE anything else
 
+import { MongoClient, ServerApiVersion } from 'mongodb';
 const uri = process.env.MONGODB_URI;
 console.log("✅ Loaded MONGODB_URI:", process.env.MONGODB_URI);
 
