@@ -70,7 +70,7 @@ export default function PlansSection() {
         />
 
        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-  {landingContent.plans.map((plan: Plan, idx: number) => (
+  {landingContent?.plans?.map((plan: Plan, idx: number) => (
     <div
       key={idx}
       dir={dir}

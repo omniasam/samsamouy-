@@ -14,24 +14,21 @@ export async function GET() {
       .collection<LandingContent & { _id: string }>(COLLECTION)
       .findOne({ _id: 'homepage' });
 
-    if (!content) {
-      return NextResponse.json(
-        {
-          heroTitle: '',
-          heroSubtitle: '',
-          services: [],
-          plans: [],
-        },
-        { status: 200 }
-      );
-    }
-
-    return NextResponse.json(content, { status: 200 });
+    return NextResponse.json(
+      content || {
+        heroTitle: { en: '', ar: '' },
+        heroSubtitle: { en: '', ar: '' },
+        services: [],
+        plans: [],
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('[GET] /landing-content error:', error);
     return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }
 }
+
 
 export async function PUT(req: NextRequest) {
   try {
