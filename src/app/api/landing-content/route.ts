@@ -12,7 +12,8 @@ export async function GET() {
 
 const content = await db
   .collection<LandingContent>(COLLECTION)
-  .findOne({ _id: 'homepage' });
+  .findOne({ _id: 'homepage' }); 
+
 
     if (!content) {
       return NextResponse.json(

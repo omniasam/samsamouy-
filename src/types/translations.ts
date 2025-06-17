@@ -90,7 +90,7 @@ export interface TranslatedField {
 }
 
 export interface LandingContent {
-  _id: string;
+  _id?: string;
   heroTitle: TranslatedField;
   heroSubtitle: TranslatedField;
   services: string[];
