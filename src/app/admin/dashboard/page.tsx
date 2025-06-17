@@ -266,7 +266,7 @@ export default function Dashboard() {
                   description: { en: '', ar: '' },
                   features: [],
                   included: [],
-                  isPopular: '',
+                  isPopular: false,
                   tiers: [],
                 },
               ],

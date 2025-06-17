@@ -128,12 +128,13 @@ export default function HeroSection() {
     return () => clearTimeout(timeout);
   }, []);
 
-useEffect(() => {
-  const ts = Date.now(); // 👈 busts the cache
-  fetch(`/api/landing-content?ts=${ts}`)
-    .then((res) => res.json())
-    .then((data: LandingContent) => setLandingContent(data));
-}, [lang]);
+  useEffect(() => {
+    
+    fetch("/api/landing-content")
+      .then((res) => res.json())
+      .then((data: LandingContent) => setLandingContent(data));
+  }, []);
+
   return (
     <main id="home" className="w-full overflow-hidden text-white">
       {/* Hero Section */}
