@@ -11,8 +11,10 @@ export async function GET() {
     const db = client.db(DB_NAME);
 
 const content = await db
-  .collection<LandingContent>(COLLECTION)
-  .findOne({ _id: 'homepage' }); 
+  .collection<LandingContent & { _id: string }>(COLLECTION)
+  .findOne({ _id: 'homepage' });
+
+
 
 
     if (!content) {
