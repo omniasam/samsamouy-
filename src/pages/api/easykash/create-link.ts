@@ -1,9 +1,15 @@
-// File: /src/pages/api/easykash/create-link.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
+  }
+
+  const authorizationHeader = req.headers['authorization'];
+  const apiKey = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
+
+  if (!apiKey || apiKey !== process.env.EASYKASH_CASH_API_KEY) {
+    return res.status(401).json({ message: 'API Key is missing or invalid' });
   }
 
   try {
@@ -17,17 +23,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       mobile,
       customerReference,
       redirectUrl,
+      payerEmail,
+      payerMobile,
+      payerName,
+      expiryDuration,
     } = req.body;
 
-    // Adding the API Key to the request body
     const response = await fetch('https://back.easykash.net/api/directpayv1/pay', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.EASYKASH_CASH_API_KEY}`, // Pass the API key as Bearer token
       },
       body: JSON.stringify({
-        // merchantId: process.env.EASYKASH_MERCHANT_ID,
-        apiKey: process.env.EASYKASH_CASH_API_KEY, // Add the API Key here
         amount,
         currency,
         paymentOptions,
@@ -37,6 +45,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         mobile,
         customerReference,
         redirectUrl,
+        payerEmail,
+        payerMobile,
+        payerName,
+        expiryDuration,
       }),
     });
 

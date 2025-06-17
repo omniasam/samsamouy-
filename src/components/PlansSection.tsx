@@ -25,38 +25,43 @@ export default function PlansSection() {
   }, [lang]);
 
   /* -------------------------------------------------------------------- */
-  const handleEasyKashPay = async (plan: Plan) => {
-    try {
-      setPaying(typeof plan.title === "string" ? plan.title : plan.title.en);
+const handleEasyKashPay = async (plan: Plan) => {
+  try {
+    setPaying(typeof plan.title === "string" ? plan.title : plan.title.en);
 
-      const res = await fetch("/api/easykash/create-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: Number(plan.price),
-          name: "omnia rafat",   // TODO: replace with real user data
-          email: "omniarafat2321@gmail.com", // "
-          mobile: "01111794465",   // "
-          customerReference: `plan-${Date.now()}`,
-          paymentOptions: [2, 4, 6, 31, 32], // card / wallet / Meeza / ApplePay / TRU
-            redirectUrl: "https://samsamouy-hlt8.vercel.app/thank-you",
-
-        }),
-      });
-
-      const { redirectUrl, error } = await res.json();
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        alert(error ?? "Failed to create pay link");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Payment error – please try again.");
-    } finally {
-      setPaying(null);
+    const res = await fetch("/api/easykash/create-link", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: Number(plan.price),
+        payerName: "Mostafa", // Replace with real user data
+        payerEmail: "mostafa@gmail.com", // User's email
+        payerMobile: "01011111157", // User's mobile
+        customerReference: `plan-${Date.now()}`,
+        paymentOptions: [2, 4, 6, 31, 32], // Payment methods: card, wallet, etc.
+        redirectUrl: "https://samsamouy-hlt8.vercel.app/thank-you",
+        apiKey: 'mc487obn5ued2ls0',
+        expiryDuration: 48, // Duration in hours
+        VoucherData: "description", // Voucher or payment description
+        type: "in", // Payment type
+      }),
+    });
+console.log(res,'djdjdjdjdj')
+    const { redirectUrl, error } = await res.json();
+    if (redirectUrl) {
+      window.location.href = redirectUrl;  // Redirect the user to the payment page
+    } else {
+      alert(error ?? "Failed to create pay link");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Payment error – please try again.");
+  } finally {
+    setPaying(null);
+  }
+};
+
+
 
   if (!landingContent) return null;
 
