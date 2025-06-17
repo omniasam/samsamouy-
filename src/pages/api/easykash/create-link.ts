@@ -19,14 +19,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       redirectUrl,
     } = req.body;
 
+    // Adding the API Key to the request body
     const response = await fetch('https://back.easykash.net/api/directpayv1/pay', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         authorization: `Token ${process.env.EASYKASH_CASH_API_KEY}`,
-
       },
       body: JSON.stringify({
+        // merchantId: process.env.EASYKASH_MERCHANT_ID,
+        apiKey: process.env.EASYKASH_CASH_API_KEY, // Add the API Key here
         amount,
         currency,
         paymentOptions,

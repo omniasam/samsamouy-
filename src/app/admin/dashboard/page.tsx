@@ -10,13 +10,10 @@ export type Tier = {
   label: string;
   value: number;
 };
-
-
 export type LocalizedString = {
   en: string;
   ar: string;
 };
-
 export type Plan = {
   title: LocalizedString;
   price: number;
@@ -34,8 +31,6 @@ export interface LandingContent {
   services: string[];
   plans: Plan[];
 }
-
-
 const defaultForm: LandingContent = {
   heroTitle: { en: '', ar: '' },
   heroSubtitle: { en: '', ar: '' },
@@ -271,19 +266,23 @@ const update = async () => {
 </ul>
 
 
-          {/* Popular Toggle */}
-          <div className="flex items-center gap-2 pt-2">
-            <label className="text-sm">هل مميز؟</label>
-            <input
-              type="checkbox"
-              checked={plan.isPopular}
-              onChange={(e) => {
-                const updated = [...form.plans];
-                updated[i].isPopular = e.target.checked;
-                setForm({ ...form, plans: updated });
-              }}
-            />
-          </div>
+<div className="flex items-center gap-2 pt-2 group">
+  <label className="text-sm">هل مميز؟</label>
+  <input
+    type="checkbox"
+    checked={plan.isPopular}
+    onChange={(e) => {
+      const updated = [...form.plans];
+      updated[i].isPopular = e.target.checked;
+      setForm({ ...form, plans: updated });
+    }}
+    className="w-3 h-3  rounded-md border-gray-300 bg-white checked:bg-mainColor 
+    group-hover:bg-gray-200
+    transition-all duration-300 ease-in-out "
+  />
+</div>
+
+          
         </div>
       ))}
 
