@@ -1,4 +1,6 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import { config } from 'dotenv';
+config();
 
 const uri = process.env.MONGODB_URI;
 console.log("✅ Loaded MONGODB_URI:", process.env.MONGODB_URI);
