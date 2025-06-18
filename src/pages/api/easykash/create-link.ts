@@ -1,72 +1,65 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+// pages/api/easykash/create-link.ts
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+  // Only allow POST requests
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
-  // Extract the API key from the Authorization header
-  const authorizationHeader = req.headers['authorization'];
-  const apiKey = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
+  // Destructure the incoming data from the frontend request body
+  const {
+    amount,
+    currency,
+    name,
+    email,
+    mobile,
+    customerReference,
+    paymentOptions,
+    redirectUrl,
+    expiryDuration,
+    VoucherData,
+    type,
+  } = req.body;
 
-  if (!apiKey || apiKey !== process.env.EASYKASH_CASH_API_KEY) {
-    return res.status(401).json({ message: 'API Key is missing or invalid' });
-  }
+  // Log the incoming data to verify if all required fields are coming through correctly
+  console.log("Request Data:", req.body);
 
   try {
-    const {
-      amount,
-      currency,
-      paymentOptions,
-      cashExpiry,
-      name,
-      email,
-      mobile,
-      customerReference,
-      redirectUrl,
-      payerEmail,
-      payerMobile,
-      payerName,
-      expiryDuration,
-      callbackUrl,  // Add callback URL from the request body
-    } = req.body;
-
-    // Send a request to EasyKash to create a direct pay link
-    const response = await fetch('https://back.easykash.net/api/directpayv1/pay', {
-      method: 'POST',
+    // Send the request to EasyKash API to create the payment link
+    const response = await fetch("https://back.easykash.net/api/directpayv1/pay", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.EASYKASH_CASH_API_KEY}`, // Pass API key as Bearer token
+        "Content-Type": "application/json",
+        Authorization: "Bearer b9u2t4l5ypnmygl7", // Use your EasyKash API key here securely
       },
       body: JSON.stringify({
         amount,
         currency,
-        paymentOptions,
-        cashExpiry,
         name,
         email,
         mobile,
         customerReference,
+        paymentOptions,
         redirectUrl,
-        payerEmail,
-        payerMobile,
-        payerName,
         expiryDuration,
-        callbackUrl,  // Add the callback URL here
+        VoucherData,
+        type,
       }),
     });
 
-    // Parse the response from EasyKash
     const data = await response.json();
 
+    // Check if EasyKash responded with an error
     if (!response.ok) {
-      return res.status(response.status).json({ message: 'Failed to create payment link', data });
+      return res.status(400).json({ message: "Failed to create pay link", data });
     }
 
-    // Return the response data
-    return res.status(200).json(data);
-  } catch (error) {
-    console.error('EasyKash API error:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    // If successful, send the payment link back to the frontend
+    res.status(200).json({ redirectUrl: data.paymentLink });
+  } catch (err) {
+    // If there was an error making the request, log it and return a 500 response
+    console.error("Error:", err);
+    return res.status(500).json({ message: "Server error", err });
   }
 }

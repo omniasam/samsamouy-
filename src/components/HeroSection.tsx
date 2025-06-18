@@ -52,13 +52,14 @@ export default function HeroSection() {
           </p>
           </>
           )}
-          <Button
-            href="#plans"
-            label={lang === "ar" ? "ابدأ الآن" : "Start Now"}
-            className="mt-4 text-white font-semibold py-3 px-6 
-              rounded-full shadow-md bg-mainColor hover:bg-orange-600
-              transition-all duration-300 ease-in-out transform hover:scale-105 border-b-4 border-transparent hover:border-orange-300"
-          />
+        <Button
+  href="#plans"
+  label={landingContent?.ctaButtonText?.[lang] ?? ""}
+  className="mt-4 text-white font-semibold py-3 px-6 
+    rounded-full shadow-md bg-mainColor hover:bg-orange-600
+    transition-all duration-300 ease-in-out transform hover:scale-105 border-b-4 border-transparent hover:border-orange-300"
+/>
+
         </div>
 
         {/* Background slider */}

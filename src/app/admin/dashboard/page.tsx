@@ -27,13 +27,17 @@ tiers: Tier[];
 export interface LandingContent {
   _id?: string;
   heroTitle: LocalizedString;
-  heroSubtitle: LocalizedString;
+    heroSubtitle: LocalizedString;
+  ctaButtonText: LocalizedString;
   services: string[];
   plans: Plan[];
+    faqs?: { question: LocalizedString; answer: LocalizedString }[];
+  testimonials?: LocalizedString[];
 }
 const defaultForm: LandingContent = {
   heroTitle: { en: '', ar: '' },
   heroSubtitle: { en: '', ar: '' },
+  ctaButtonText: { en: '', ar: '' },
   services: [''],
   plans: [
     {
@@ -104,6 +108,35 @@ const update = async () => {
               onChange={(e) => setForm({ ...form, heroSubtitle: { ...form.heroSubtitle, ar: e.target.value } })}
             />
           </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <CustomInput
+  placeholder="CTA Button (EN)"
+  value={form.ctaButtonText?.en || ''}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      ctaButtonText: {
+        ...form.ctaButtonText,
+        en: e.target.value,
+      },
+    })
+  }
+/>
+<CustomInput
+  placeholder="CTA Button (AR)"
+  value={form.ctaButtonText?.ar || ''}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      ctaButtonText: {
+        ...form.ctaButtonText,
+        ar: e.target.value,
+      },
+    })
+  }
+/>
+
+</div>
         </div>
       ),
     },
@@ -314,7 +347,107 @@ const update = async () => {
       </div>
     </div>
   )
+},
+{
+  label: 'FAQs',
+  content: (
+    <div className="space-y-4">
+      {(form as any).faqs?.map((faq: any, i: number) => (
+        <div key={i} className="space-y-2">
+          <CustomInput
+            placeholder={`Question (EN)`}
+            value={faq.question.en}
+            onChange={(e) => {
+              const updated = [...(form as any).faqs];
+              updated[i].question.en = e.target.value;
+              setForm({ ...(form as any), faqs: updated });
+            }}
+          />
+          <CustomInput
+            placeholder={`السؤال (AR)`}
+            value={faq.question.ar}
+            onChange={(e) => {
+              const updated = [...(form as any).faqs];
+              updated[i].question.ar = e.target.value;
+              setForm({ ...(form as any), faqs: updated });
+            }}
+          />
+          <CustomTextarea
+            placeholder={`Answer (EN)`}
+            value={faq.answer.en}
+            onChange={(e) => {
+              const updated = [...(form as any).faqs];
+              updated[i].answer.en = e.target.value;
+              setForm({ ...(form as any), faqs: updated });
+            }}
+          />
+          <CustomTextarea
+            placeholder={`الإجابة (AR)`}
+            value={faq.answer.ar}
+            onChange={(e) => {
+              const updated = [...(form as any).faqs];
+              updated[i].answer.ar = e.target.value;
+              setForm({ ...(form as any), faqs: updated });
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() =>
+          setForm({
+            ...(form as any),
+            faqs: [...((form as any).faqs || []), { question: { en: '', ar: '' }, answer: { en: '', ar: '' } }],
+          })
+        }
+        className="px-4 py-2 bg-mainColor text-white rounded hover:bg-orange-600"
+      >
+        + Add FAQ
+      </button>
+    </div>
+  ),
+},
+{
+  label: 'Testimonials',
+  content: (
+    <div className="space-y-4">
+      {(form as any).testimonials?.map((testimonial: any, i: number) => (
+        <div key={i} className="space-y-2">
+          <CustomTextarea
+            placeholder="Testimonial (EN)"
+            value={testimonial.en}
+            onChange={(e) => {
+              const updated = [...(form as any).testimonials];
+              updated[i].en = e.target.value;
+              setForm({ ...(form as any), testimonials: updated });
+            }}
+          />
+          <CustomTextarea
+            placeholder="رأي العميل (AR)"
+            value={testimonial.ar}
+            onChange={(e) => {
+              const updated = [...(form as any).testimonials];
+              updated[i].ar = e.target.value;
+              setForm({ ...(form as any), testimonials: updated });
+            }}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() =>
+          setForm({
+            ...(form as any),
+            testimonials: [...((form as any).testimonials || []), { en: '', ar: '' }],
+          })
+        }
+        className="px-4 py-2 bg-mainColor text-white rounded hover:bg-orange-600"
+      >
+        + Add Testimonial
+      </button>
+    </div>
+  ),
 }
+
+
 
 
   ];

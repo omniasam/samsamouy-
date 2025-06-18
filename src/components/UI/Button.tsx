@@ -25,25 +25,21 @@ export default function Button({
     }
   };
 
-  const content = (
-    <>
-      {!isRTL && <span className="mr-3">{label}</span>}
-      {isRTL && (
-        <span className="ml-3 transform rotate-180">
-          <FiArrowRight size={16} />
-        </span>
-      )}
-      {isRTL && <span>{label}</span>}
-      {!isRTL && (
-        <span className="ml-3 transition-transform duration-300 group-hover:translate-x-1">
-          <FiArrowRight size={16} />
-        </span>
-      )}
-    </>
-  );
+ const content = (
+  <div className={`flex items-center ${isRTL ? "flex-row-reverse" : ""} gap-2`}>
+    <FiArrowRight
+      size={16}
+      className={isRTL ? "rotate-180" : ""}
+    />
+    <span>{label}</span>
+  </div>
+);
 
-  const baseClasses = `group inline-flex items-center uppercase font-bold text-sm tracking-wider transition duration-300
-    text-white bg-orange-700 px-6 py-3 shadow-md ${className}`;
+
+  const baseClasses = `group inline-flex items-center font-bold text-sm tracking-wide
+    text-white bg-mainColor px-6 py-3 rounded-full shadow-md
+    hover:bg-orange-600 transition-all duration-300 ease-in-out transform hover:scale-105
+    border-b-4 border-transparent hover:border-orange-300 ${className}`;
 
   if (isScrollTarget) {
     return (

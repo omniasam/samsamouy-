@@ -20,41 +20,45 @@ export const translations: Record<Language, TranslationsStructure> = {
       subHeadline: "It's time for real change. Your custom nutrition & workout plan awaits.",
       cta: "Start Your Transformation",
     },
-      who: {
-      sectionSubtitle: "The difference that keeps you going",
-      benefits: [
-        {
-          title: "Custom Plan for You",
-          description: "A plan tailored to your goal, body, and fitness level.",
-        },
-        {
-          title: "Direct Follow-up",
-          description: "Weekly communication with your coach and real commitment to your journey.",
-        },
-        {
-          title: "Fits Your Lifestyle",
-          description: "We adapt the plan to your job, schedule, and personal needs.",
-        },
-      ],
+     who: {
+  sectionSubtitle: "The 3 Reasons Why to Continue",
+  benefits: [
+    {
+      title: "100% Personalized Plans for You",
+      description:
+        "Every diet and workout is customized based on your body, your goal, and any injuries or medical conditions — so it fits you perfectly and delivers real results.",
     },
-      howItWorks: {
-      label: "How to Start?",
-      title: "Simple Steps to Achieve Results",
-      steps: [
-        {
-          title: "Send Us Your Info",
-          description: "Fill out the form, and we’ll collect all the details to get started.",
-        },
-        {
-          title: "Receive Your Custom Plan",
-          description: "You’ll receive a professional plan made just for you within a few days.",
-        },
-        {
-          title: "Start Your Journey With Us",
-          description: "Start following your plan, and we’ll guide you every step of the way.",
-        },
-      ],
+    {
+      title: "Flexibility That Fits Your Daily Life",
+      description:
+        "Plans tailored to your lifestyle — whether you're busy, working full-time, or always on the go. We also consider your food preferences and training location/days so you can stay committed comfortably and without boredom.",
     },
+    {
+      title: "Continuous Support and Personalized Follow-up",
+      description:
+        "Direct communication with coaches + a dedicated support team ready to help you at any time.",
+    },
+  ],
+}
+,
+     howItWorks: {
+  title: "3 Simple Steps to Reach Your Goal.",
+  steps: [
+    {
+      title: "Send Us Your Details in the Form",
+      description: "Fill out the form and we’ll collect all the info we need to get started.",
+    },
+    {
+      title: "Receive a Plan Tailored to Your Body & Lifestyle",
+      description: "You’ll get a professional plan crafted just for you within a few days.",
+    },
+    {
+      title: "Start Your Journey with Full Support from Us",
+      description: "Begin following the plan and we’ll be with you every step of the way.",
+    },
+  ],
+},
+
     realResults: {
   title: "Real Success Stories from Our Clients in Egypt and the Arab World",
 },
@@ -220,32 +224,33 @@ plansSection: {
       cta: "ابدأ تغييرك دلوقتي",
     },
       who: {
-      sectionSubtitle: "ازاي تبتدي الفرق اللي بيخليك تكمل !",
+      sectionSubtitle:"الفرق اللي يخليك تكمل ",
       benefits: [
         {
-          title: "خطة مخصصة ليك",
-          description: "خطة معمولة مخصوص لهدفك، جسمك، ومستوى لياقتك",
+          title: " خطط مخصصة 100% ليك",
+          description:
+          "كل دايت وتمرين بيتفصل حسب جسمك, هدفك, ولو كنت بتعاني من أي اصابة - حالة طبية علشان يكون مناسب ليك لتحقيق افضل النتايج"
         },
         {
-          title: "متابعة مباشرة",
-          description: "تواصل أسبوعي مع المدرب، واهتمام فعلي بمشوارك",
+          title: "مرونة تناسب حياتك اليومية",
+          description: 
+      " أنظمة بتتظبط على طبيعة يومك سواء كنت مشغول، بتشتغل طول الوقت أو حياتك سريعة.وكمان  بنراعى تفضيلاتك في الأكل و مكان و عدد ايام التمرين علشان تلتزم براحتك ومن غير ملل."
         },
         {
-          title: "نظام يناسب حياتك",
-          description: "بنظبط الخطة على شغلك، مواعيدك، واحتياجاتك الشخصية",
+          title:  "دعم مستمر ومتابعة شخصية",
+          description: "تواصل مباشر مع المدربيين + فريق المتخصصيصن جاهزين يساعدوك في أي وقت."
         },
       ],
     },
  howItWorks: {
-  label: "ازاي تبتدي؟",
-  title: "الخطوات البسيطة للوصول للنتيجة",
+  title: "٣ خطوات بسيطة للوصول لهدفك.",
   steps: [
     {
-      title: "ابعتلنا تفاصيلك",
+      title: "ابعتلنا تفاصيلك في الفورم",
       description: "املأ الفورم، وهنجمع كل التفاصيل عنك عشان نبدأ",
     },
     {
-      title: "استلم خطتك المتفصلة عليك",
+      title: "استلم خطة مناسبة لجسمك وأسلوب حياتك",
       description: "هتبعتلك خطة احترافية معمولة مخصوص ليك في خلال أيام",
     },
     {

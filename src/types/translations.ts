@@ -11,7 +11,6 @@ export interface TranslationsStructure {
     benefits: { title: string; description: string }[];
   };
   howItWorks: {
-    label: string;
     title: string;
     steps: { title: string; description: string }[];
   };
@@ -30,7 +29,7 @@ export interface TranslationsStructure {
     experience: string;
     support: string;
   };
-  faq: {
+  faqs: {
     title: string;
     list: { question: string; answer: string }[];
   };
@@ -109,6 +108,10 @@ export interface LandingContent {
   _id?: string;
   heroTitle: TranslatedField;
   heroSubtitle: TranslatedField;
+    ctaButtonText: LocalizedString;
+  
   services: string[];
   plans: Plan[];
+    faqs?: { question: LocalizedString; answer: LocalizedString }[];
+  testimonials?: LocalizedString[];
 }
