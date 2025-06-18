@@ -10,24 +10,13 @@ const section1Images = [
   "/transformations/client2.jpeg",
   "/transformations/client8.jpeg",
 ];
+type HeroSectionProps = {
+  landingContent: LandingContent | null;
+};
 
-export default function HeroSection() {
+
+export default function HeroSection({ landingContent }: HeroSectionProps) {
   const { lang, dir } = useLang(); // gets 'en' or 'ar'
-  const [landingContent, setLandingContent] = useState<LandingContent | null>(null);
-  const [showText, setShowText] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setShowText(true), 300);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    
-    fetch("/api/landing-content")
-      .then((res) => res.json())
-      .then((data: LandingContent) => setLandingContent(data));
-  }, []);
-
   return (
     <main id="home" className="w-full overflow-hidden text-white">
       {/* Hero Section */}
@@ -36,7 +25,7 @@ export default function HeroSection() {
           className="absolute inset-0 z-30 flex flex-col justify-center items-center text-center px-6"
           dir={dir}
         >
-          {showText && (
+     
 <>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold md:font-extrabold leading-normal mb-4 text-white [text-shadow:_4px_4px_0_rgb(133_126_126)] animate-fade-in-up">
@@ -51,7 +40,7 @@ export default function HeroSection() {
             </span>
           </p>
           </>
-          )}
+ 
         <Button
   href="#plans"
   label={landingContent?.ctaButtonText?.[lang] ?? ""}

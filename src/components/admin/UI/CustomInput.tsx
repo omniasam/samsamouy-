@@ -18,7 +18,7 @@ export function CustomInput({
       <input
         {...props}
         value={value ?? ""}
-        className={`w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white text-black
+        className={`w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white 
           p-2 text-sm text-black
          
           focus:outline-none focus:ring-2 focus:ring-mainColor focus:border-mainColor

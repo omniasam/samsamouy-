@@ -3,6 +3,8 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import Title from "./UI/Title";
 import { useLang } from "@/context/LangContext";
 import { LandingContent, Plan } from "@/types/translations";
+import axios from "axios"; // Import Axios
+import PaymentButton from "./UI/PaymentButton";
 
 /* ---- Component -------------------------------------------------------- */
 export default function PlansSection() {
@@ -15,60 +17,71 @@ export default function PlansSection() {
 
   /* Fetch landing content – refetch if language changes */
   useEffect(() => {
-    fetch("/api/landing-content")
-      .then(res => res.json())
-      .then((data: LandingContent) => setLandingContent(data));
+    axios.get("/api/landing-content")
+      .then((res) => setLandingContent(res.data))
+      .catch((err) => console.error("Error fetching landing content:", err));
   }, [lang]);
 
   /* -------------------------------------------------------------------- */
-  const handleEasyKashPay = async (plan: Plan) => {
-    try {
-      setPaying(typeof plan.title === "string" ? plan.title : plan.title.en);
+const handleEasyKashPay = async (plan: Plan) => {
+  if (!plan || !plan.title || !plan.price) {
+    alert("Plan data is missing, unable to proceed with payment.");
+    return;
+  }
 
-      // Send the request to your backend (Next.js) instead of EasyKash directly
-      const res = await fetch("/api/easykash/create-link", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: 180,
-          currency: "EGP",
-          name: "Mostafa",
-          email: "mostafa@gmail.com",
-          mobile: "01011111157",
-          customerReference: `plan-${Date.now()}`,
-          paymentOptions: [2, 4, 6],
-          redirectUrl: "https://samsamouy-hlt8.vercel.app/thank-you",
-          expiryDuration: 48,
-          VoucherData: "Test Plan Description",
-          type: "in",
-        }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.error("Payment creation error:", errorData);
-        alert(`Failed to create pay link: ${errorData?.message}`);
-        return;
-      }
-
-      const { redirectUrl, error } = await res.json();
-
-      if (redirectUrl) {
-        window.location.href = redirectUrl; // Redirect the user to the payment page
-      } else {
-        alert(error ?? "Failed to create pay link");
-      }
-    } catch (err) {
-      console.error("Payment error:", err);
-      alert("Payment error – please try again.");
-    } finally {
-      setPaying(null);
-    }
+  const paymentData = {
+    amount: plan.price,  // Ensure you use the correct plan price
+    currency: "EGP",
+    name: "Mostafa",
+    email: "mostafa@gmail.com",
+    mobile: "01011111157",
+    customerReference: `plan-${Date.now()}`,
+    paymentOptions: [2, 4, 6], // Example options
+    redirectUrl: "https://samsamouy-hlt8.vercel.app/thank-you",
+    expiryDuration: 48,
+    VoucherData: "Test Plan Description",
+    type: "in",
   };
 
-  if (!landingContent) return null;
+  console.log('Sending payment request with data: ', paymentData);
+
+  try {
+    setPaying(typeof plan.title === "string" ? plan.title : plan.title.en);
+
+    // Send request to backend to generate the payment link
+    const res = await fetch("/api/easykash/create-link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(paymentData),  // Ensure you send the correct data format
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("Payment creation error:", errorData);
+      alert(`Failed to create pay link: ${errorData?.message}`);
+      return;
+    }
+
+    const { redirectUrl, error } = await res.json();
+
+    if (redirectUrl) {
+      window.location.href = redirectUrl;  // Redirect user to EasyKash payment page
+    } else {
+      alert(error ?? "Failed to create pay link");
+    }
+  } catch (err) {
+    console.error("Payment error:", err);
+    alert("Payment error – please try again.");
+  } finally {
+    setPaying(null);  // Reset loading state
+  }
+};
+
+
+
+  // if (!landingContent) return null;
 
   /* -------------------------------------------------------------------- */
   return (
@@ -78,6 +91,7 @@ export default function PlansSection() {
           title={lang === "ar" ? "الباقات المتاحة" : "Choose the Plan That Fits You"}
           className="mb-16"
         />
+
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {landingContent?.plans?.map((plan: Plan, idx: number) => (
@@ -142,19 +156,20 @@ export default function PlansSection() {
                     </div>
                   ))
                 ) : (
-                  <button
-                    disabled={paying !== null}
-                    onClick={() => handleEasyKashPay(plan)}
-                    className={`w-full mt-4 py-2 rounded-md text-white ${
-                      plan.isPopular ? "bg-mainColor text-lg font-bold" : "bg-gray-800"
-                    } ${paying ? "opacity-60 cursor-not-allowed" : ""}`}
-                  >
-                    {paying
-                      ? lang === "ar"
-                        ? "جاري التحويل..."
-                        : "Processing..."
-                      : plan.button?.[lang] ?? (lang === "ar" ? "ابدأ الآن" : "Start Now")}
-                  </button>
+                  // <button
+                  //   disabled={paying !== null}
+                  //   onClick={() => handleEasyKashPay(plan)}
+                  //   className={`w-full mt-4 py-2 rounded-md text-white ${
+                  //     plan.isPopular ? "bg-mainColor text-lg font-bold" : "bg-gray-800"
+                  //   } ${paying ? "opacity-60 cursor-not-allowed" : ""}`}
+                  // >
+                  //   {paying
+                  //     ? lang === "ar"
+                  //       ? "جاري التحويل..."
+                  //       : "Processing..."
+                  //     : plan.button?.[lang] ?? (lang === "ar" ? "ابدأ الآن" : "Start Now")}
+                  // </button>
+                  <PaymentButton plan={plan} />
                 )}
               </div>
             </div>
