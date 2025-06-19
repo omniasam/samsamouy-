@@ -34,11 +34,11 @@ export default function PaymentButton({ plan }: { plan: Plan }) {
 
     try {
       // Send the payment request to your backend API
-      const res = await fetch("/api/payment", {
+      const res = await fetch("https://back.easykash.net/api/directpayv1/pay", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${EASYKASH_API_KEY}`,  // Add 'Bearer' here for authentication
+          Authorization: `Bearer ${EASYKASH_API_KEY}`,  // Correct authorization format
         },
         body: JSON.stringify(paymentData),  // Send the payment data in the request body
       });
